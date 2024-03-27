@@ -1,18 +1,26 @@
+require('dotenv').config();
+const fs = require('fs');
 const web3 = require('@solana/web3.js');
 const BN = require('bn.js');
 
 // Create a new connection to the Solana devnet
 const connection = new web3.Connection(web3.clusterApiUrl('devnet'), 'confirmed');
 
-const MINT_AUTHORITY = web3.Keypair.generate(); // This will be the minting authority's keypair
+// Load the mint authority's keypair from id.json
+const mintAuthorityKeypair = web3.Keypair.fromSecretKey(
+  new Uint8Array(JSON.parse(fs.readFileSync(process.env.ID_JSON_PATH, 'utf8')))
+);
 
-// The golden ratio
-const phi = 1.61803398875;
-// Total supply calculation using phi multiplied by 10^12
-const totalSupply = new BN(phi * Math.pow(10, 12));
+// Use the RECIPIENT_PUBLIC_KEY environment variable
+const recipientPublicKey = new web3.PublicKey(process.env.RECIPIENT_PUBLIC_KEY);
+
+// The golden ratio, multiplied by 10^12 for total supply calculation
+const totalSupply = new BN(1.61803398875 * Math.pow(10, 12));
 
 async function mintGZETokens() {
-  // Logic to create new tokens will go here, using the totalSupply as the fixed amount
+  // Logic to mint tokens will go here
+  // This includes creating a transaction that sends tokens to recipientPublicKey
+  // and signs the transaction with mintAuthorityKeypair
 }
 
 console.log(`The total supply of GZE tokens to be minted is: ${totalSupply.toString()}`);
