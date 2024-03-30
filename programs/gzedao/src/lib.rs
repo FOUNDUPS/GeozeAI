@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6S..."); // Replace with your actual program ID.
+declare_id!("BPFLoader1111111111111111111111111111111111"); // Replace with your actual program ID after deployment
 
 #[program]
 pub mod gzedao {
